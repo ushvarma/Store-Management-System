@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
     def configure_permitted_parameters
          devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :email, :password, :current_password, :date_of_birth, :phone_number, :address, :credit_card_number, :name_on_card, :expiration_date, :CVV) }
-        devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :password, :current_password, :date_of_birth, :phone_number, :address, :credit_card_number, :name_on_card, :expiration_date, :CVV) }
+         devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :email, :password, :current_password, :date_of_birth, :phone_number, :address, :credit_card_number, :name_on_card, :expiration_date, :CVV) }
     end
 
     def calculate_counts
