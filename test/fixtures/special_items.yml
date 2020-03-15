@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  specialUserId: 1
+  specialItemid: 1
+  specialItemTransactionId: MyString
+  specialQuantity: 1
+  refundAmount: 1.5
+  specialItemStatus: false
+
+two:
+  specialUserId: 1
+  specialItemid: 1
+  specialItemTransactionId: MyString
+  specialQuantity: 1
+  refundAmount: 1.5
+  specialItemStatus: false

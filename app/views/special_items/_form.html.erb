@@ -1,0 +1,47 @@
+<%= form_with(model: special_item, local: true) do |form| %>
+  <% if special_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(special_item.errors.count, "error") %> prohibited this special_item from being saved:</h2>
+
+      <ul>
+        <% special_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :specialUserId %>
+    <%= form.number_field :specialUserId %>
+  </div>
+
+  <div class="field">
+    <%= form.label :specialItemid %>
+    <%= form.number_field :specialItemid %>
+  </div>
+
+  <div class="field">
+    <%= form.label :specialItemTransactionId %>
+    <%= form.text_field :specialItemTransactionId %>
+  </div>
+
+  <div class="field">
+    <%= form.label :specialQuantity %>
+    <%= form.number_field :specialQuantity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :refundAmount %>
+    <%= form.text_field :refundAmount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :specialItemStatus %>
+    <%= form.check_box :specialItemStatus %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

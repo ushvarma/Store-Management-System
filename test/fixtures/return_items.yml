@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  returnuserId: 1
+  returnItemid: 1
+  returnTransactionId: MyString
+  returnQuantity: 1
+  refundAmount: 1.5
+
+two:
+  returnuserId: 1
+  returnItemid: 1
+  returnTransactionId: MyString
+  returnQuantity: 1
+  refundAmount: 1.5

@@ -1,0 +1,48 @@
+<!--<div class="container">
+    <div class = "row">
+        <div class = "col-md-4"></div>
+        <div class = "border col-md-4">
+            <div class="d-flex flex-column">
+                <div class="p-2"><strong>Order Summary</strong></div>
+                <div class="p-2"><strong>Item: </strong><%= @item.name%></div>
+                <div class="p-2"><strong>Cost: </strong><%= @total%></div>
+                <div class="p-2"><strong>Taxes: </strong><%= @taxes%></div>
+                <div class="p-2"><strong>Discount<%= @message %>: </strong>-<%= @discounts%> </div>
+                <div class="p-2"><strong>Total: </strong><%= @orderTotal%></div>
+                <div class="p-2"><%= button_to "Make Payment", {:controller => "orders", :action => "create", :userId => current_user.id, :orderItemId => @item.id, :transactionId => @tid, :quantity => 1, :unitPrice => @item.price, :orderPrice => @orderTotal}, method: "post" %></div>
+            </div>
+        </div>
+        <div class = "col-md-4"></div>
+    </div>
+</div>
+-->
+<div class = "row">
+    <div class = "col-md-2"></div>
+    <div class = "col-md-8">
+        <table class = "table table-hover">
+            <thead>
+                <tr>
+                    <th class = "rounded-top bg-dark text-white text-center" scope = "col" colspan = "2">Order Summary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Item</td><td class = "text-right"><%= @item.name%></td></tr>
+                <tr><td>Cost</td><td class = "text-right"><%= @total%></td></tr>
+                <tr><td>Taxes</td><td class = "text-right"><%= @taxes%></td></tr>
+                <tr><td>Discount<%= @message %></td><td class = "text-right">-<%= @discounts %></td></tr>
+                <tr><td>Total</td><td class = "text-right"><%= @orderTotal%></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+ <br>
+  <div class = "row">
+    <div class = "col-md-2"></div>
+    <div class = "col-md-6">
+      <%= link_to 'Back', items_path , :class => "btn btn-primary"%>
+    </div>
+    <div class = "col-md-4">
+      <%#= button_to "Make Payment", {:controller => "orders", :action => "create", :userId => current_user.id, :orderItemId => @item.id, :transactionId => @tid, :quantity => 1, :unitPrice => @item.price, :orderPrice => @orderTotal}, method: "post", :class => "btn btn-outline-primary" %>
+      <%= button_to "Make Payment", otp_url, params: { is_true: true, is_quick: true, item_id: @item.id}, method: "get", :class => "btn btn-success" %>
+    </div>
+  </div>

@@ -1,0 +1,6 @@
+<h4>Dear <%= @user.name %>,</h4>
+<p>Your Request for return of item <%= @item.name %> has been <%= @approved %></p>
+<% if @approved == "Accepted"%>
+    <p> An amount of <%= @total %> will be refunded to you.<p>
+<% end %>
+<p>Please continue shopping with us.</p>

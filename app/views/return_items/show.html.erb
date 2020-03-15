@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Returnuserid:</strong>
+  <%= @return_item.returnuserId %>
+</p>
+
+<p>
+  <strong>Returnitemid:</strong>
+  <%= @return_item.returnItemid %>
+</p>
+
+<p>
+  <strong>Returntransactionid:</strong>
+  <%= @return_item.returnTransactionId %>
+</p>
+
+<p>
+  <strong>Returnquantity:</strong>
+  <%= @return_item.returnQuantity %>
+</p>
+
+<p>
+  <strong>Refundamount:</strong>
+  <%= @return_item.refundAmount %>
+</p>
+
+<%= link_to 'Edit', edit_return_item_path(@return_item) %> |
+<%= link_to 'Back', return_items_path %>

@@ -1,0 +1,43 @@
+<!--<nav class=" shadow-top navbar navbar-expand-md navbar-dark bg-dark mb-3 rounded-bottom">
+  <div class ="container">
+    <div class="  navbar-nav">
+    <div class="  navbar-nav">
+      <%= link_to "Store", items_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Wishlists (#{@wc})", wishlists_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Cart (#{@cc})", carts_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Orders (#{@oc})", orders_url, method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Items Returned", return_items_url(:status_id => 1), method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Rejected Special Requests", special_items_url(:status_id => 2), method: "get", :class=>"nav-item nav-link"%>
+      <% if current_user.is_admin == true %>
+      <%= link_to "Return Requests", return_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Special Requests", special_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link"%>
+      <% end %>
+    </div>
+  </div>
+</nav>-->
+<h1>Wishlists</h1>
+<% if @wishlists.present?%>
+<table class = "table table-hover">
+  <thead>
+    <tr>
+      <th>Unit</th>
+       <th>Cost</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wishlists.each do |wishlist| %>
+      <tr>
+        <td><%= Item.where(:id => wishlist.wishlistItem).select("name").last.name %></td>
+        <td><%= Item.where(:id => wishlist.wishlistItem).select("price").last.price %></td>  
+        <td><%= button_to 'X', wishlist, method: :delete, data: { confirm: 'Are you sure?' }, :class=> "btn btn-outline-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else%>
+  <h3>The list is empty.</h3></h3>
+<% end %>
+
+<%= link_to 'Back', items_path , :class => "btn btn-primary"%>

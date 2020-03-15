@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Adminpages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Phone number</th>
+      <th>Date of birth</th>
+      <th>Address</th>
+      <th>Credit card number</th>
+      <th>Name on card</th>
+      <th>Expiration date</th>
+      <th>CVV</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @adminpages.each do |adminpage| %>
+      <tr>
+        <td><%= adminpage.name %></td>
+        <td><%= adminpage.email %></td>
+        <td><%= adminpage.password %></td>
+        <td><%= adminpage.phone_number %></td>
+        <td><%= adminpage.date_of_birth %></td>
+        <td><%= adminpage.address %></td>
+        <td><%= adminpage.credit_card_number %></td>
+        <td><%= adminpage.name_on_card %></td>
+        <td><%= adminpage.expiration_date %></td>
+        <td><%= adminpage.CVV %></td>
+        <td><%= link_to 'Show', adminpage %></td>
+        <td><%= link_to 'Edit', edit_adminpage_path(adminpage) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

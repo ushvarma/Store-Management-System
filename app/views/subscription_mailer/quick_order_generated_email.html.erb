@@ -1,0 +1,55 @@
+<h4><%= @user.name %></h4>
+<br/>
+<p>You have recently made a purchase from our website. Your order details are as follows</p>
+<br/>
+<table style = "width:700px;margin-left:auto;margin-right:auto">
+    <thead style = "background:#000;color:#fff">
+        <tr>
+            <th colspan = "2">Transaction ID <%= @tid%></th>
+            <th colspan = "2">Order Price <%= Order.where(:transactionid => @tid).last.orderPrice%></th>
+        </tr>
+        <tr></tr>
+    </thead>
+    <tbody>
+        <% Order.where(:transactionid => @tid).select("orderItemId").each do |unitid| %>
+            <tr>
+                <td>
+                    <strong>Item name:</strong> <%= Item.where(:id => unitid.orderItemId).last.name%>
+                    <% @unit = Item.where(:id => unitid.orderItemId).last %>
+                    <% if @unit.special_item and SpecialItem.where(:specialItemid => @unit.id).where(:specialuserId =>@user.id ).where(:specialItemTransactionId => @tid).last.present? %>
+                        <br/>Admin Approval Pending
+                    <% end %>
+                </td>
+                <td>
+                    <span>X</span> <%= Order.where(:orderItemId => unitid.orderItemId).where(:transactionId => @tid).last.quantity%>
+                </td>
+                <td>
+                    <strong>Unit Price:</strong> <%= Item.where(:id => unitid.orderItemId).last.price%>
+                </td>
+            </tr>
+            <tr></tr>
+        <% end %>
+        <tr>
+            <td></td>
+            <td>Sub-total</td>
+            <td><%= @total%></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Taxes</td>
+            <td><%= @taxes%></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Discounts<%= @message%></td>
+            <td><%= @discounts%></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Total</td>
+            <td><%= @orderTotal%></td>
+        </tr>
+    </tbody>
+</table>
+<br/>
+<p>Thank you for shopping with us.</p>

@@ -1,0 +1,2 @@
+class ReturnItem < ApplicationRecord
+end

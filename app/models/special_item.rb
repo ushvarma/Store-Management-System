@@ -1,0 +1,2 @@
+class SpecialItem < ApplicationRecord
+end

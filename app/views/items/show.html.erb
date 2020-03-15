@@ -1,0 +1,95 @@
+<h1>Item Details</h1></td>
+<div class = "row">
+  <div class = "col-md-7">
+    <p>
+      <strong>Name:</strong>
+      <%= @item.name %>
+    </p>
+
+    <% if @item.photo.present? %>
+      <p><%= image_tag @item.photo.url(:medium) %></p>
+    <% end %>
+
+    <p>
+      <strong>Category:</strong>
+      <%= @item.description %>
+    </p>
+
+    <p>
+      <strong>Quantity:</strong>
+      <%= @item.quantity %>
+    </p>
+
+    <p>
+      <strong>Price:</strong>
+      <%= @item.price %>
+    </p>
+
+    <p>
+      <strong>Tax slab:</strong>
+      <%= @item.tax_slab %>
+    </p>
+
+    <p>
+      <strong>Description:</strong>
+      <%= @item.description %>
+    </p>
+
+    <p>
+      <strong>Special Item:</strong>
+      <%= @item.special_item %>
+    </p>
+
+    <p>
+      <strong>Age Restricted Item:</strong>
+      <%= @item.age_restricted %>
+    </p>
+  </div>
+  <div class = "col-md-5">
+    <% if current_user && current_user.is_admin %>
+      <h3>Comments</h3>
+      <% @item.comments.each do |comment| %>
+          <p><strong>comment :</strong>: <%= comment.comment %></p>
+      <% end %>
+    <% end %>
+    <br/>
+    <h3>Give Feedback</h3>
+    <%= form_for([@item, @item.comments.build]) do |f| %>
+      <p>
+        <%= f.text_area(:comment, {:class => 'form-control'}) %>
+      </p>
+      <p>
+        <%= f.submit({:class => 'btn btn-success', :value => "Send"}) %>
+      </p>
+      <% end %>
+      <% if current_user %>
+        <% if current_user.is_admin == true %>
+          <%= link_to 'Edit', edit_item_path(@item) ,:class => "btn btn-success"%>
+          <% end %>    
+      <% else %>
+      <%= link_to 'Register to buy', new_user_registration_path, :class => "btn btn-warning" %>     
+    <% end %>
+  </div>
+</div>
+
+<% if current_user %>   
+  <div class = "row">   
+    <% if @item.quantity == 0 %>
+      <div class = "col-md-4"><%= link_to "Add to Subscription List", items_url(:is_subscribing=> true, :item_id => @item.id), :class => "btn btn-warning" %></div>
+    <% else %>
+      <div class = "col-md-2">
+        <%= button_to 'Add to Cart', {:controller => "carts", :action => "create", :name => current_user.email, :cartItem => @item.id, :item_id => @item.id, :itemquantity => 1}, method: "post", :class => "btn btn-outline-success" %>
+      </div>
+      <div class = "col-md-2">
+        <%= link_to 'Buy Now', quicktransaction_url(:itm_id => @item.id),:class =>"btn btn-outline-primary" %>
+      </div>
+      <div class = "col-md-2">
+        <%= button_to 'Add to Wishlist', {:controller => "wishlists", :action => "create", :wname => current_user.email, :wishlistItem => @item.id}, method: "post", :class => "btn btn-outline-info" %>
+      </div>
+    <% end %>
+    <div class = "col-md-12">
+      <br/><%= link_to 'Back', items_path, :class => "btn btn-primary" %>
+    </div>
+  </div>
+<% end %>
+

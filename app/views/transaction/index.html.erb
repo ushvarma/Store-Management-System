@@ -1,0 +1,62 @@
+<div class = "container">
+    <div class = "row">
+        <div class = "col-md-2"></div>
+        <div class = " border col-md-6">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                    <th>Item</th>
+                    <th>Unit price</th>                    
+                    <th>Quantity</th>
+                    <th style="text-align:right">Cost</th>
+                    <th colspan="3"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% @carts.each do |cart| %>
+                    <tr>
+                        <td><%= Item.where(["id = ?", cart.cartItem]).last.name %></td>
+                        <td><%= Item.where(["id = ?", cart.cartItem]).last.price %></td>
+                        <td><%= cart.itemquantity%></td> 
+                        <td style="text-align:right"><%= Item.where(["id = ?", cart.cartItem]).last.price * cart.itemquantity  %></td>                               
+                    </tr>
+                    <% end %>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Total</td>
+                        <td style="text-align:right"><%= @total %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Taxes</td>
+                        <td style="text-align:right"><%= @taxes %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Discounts<%= @message %></td>
+                        <td style="text-align:right">-<%= @discounts %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Total Amount</td>
+                        <td style="text-align:right"><%= @orderTotal %></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <%= button_to "Make Payment", otp_url, params: { is_true: true, is_order: true}, method: "get", :class => "btn btn-success" %>
+                        </td>
+                        <td></td>                        
+                    </tr>                        
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+</div>

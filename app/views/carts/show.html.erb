@@ -1,0 +1,12 @@
+<p>
+  <strong>Name:</strong>
+  <%= @cart.name %>
+</p>
+
+<p>
+  <strong>Cartitem:</strong>
+  <%= @cart.cartItem %>
+</p>
+
+<%= link_to 'Edit', edit_cart_path(@cart) %> |
+<%= link_to 'Back', items_path %>

@@ -1,0 +1,57 @@
+<!--<h1> Registered Users </h1>
+
+<% @users = User.all %>
+<% @users.each do |user| %>
+  <%= user.name %> 
+  <% if user.is_admin == false %>
+  <%= link_to 'Show ', user_path(user) %>
+  <%= link_to 'Edit', edit_user_path(user)%>
+  <%= link_to "Destroy", user, method: :delete, data: { confirm: "You sure?" } %>
+  <% end %>
+  <pre> <%= user.email%><br/></pre>
+<% end %>
+
+<br>
+
+<%= link_to "Create user", new_user_path %>
+
+<br>
+
+<br>
+
+<%= link_to 'Back', items_path %>
+-->
+<div class = "row">
+  <div class = "col-md-5">
+    <h1> Registered Users </h1>
+  </div>
+  <div class = "col-md-3">
+    <%#= link_to 'Create User', items_path, :class => "btn btn-primary" %>
+  </div>
+  <div class = "col-md-4">
+  </div>
+</div>
+
+<table class = "table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan = "2" >Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users = User.where(:is_admin => false) %>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %> </td>
+        <td><%= user.email%> </td>
+        <td><%= link_to 'Show', user_path(user), :class => "btn btn-warning" %>
+          <%= link_to 'Edit', edit_user_path(user), :class => "btn btn-warning" %>
+          <%= link_to "X", user, method: :delete, data: { confirm: "You sure?" }, :class => "btn btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', items_path, :class => "btn btn-primary" %>

@@ -1,0 +1,24 @@
+<h1>Welcome to Store Management system</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @homepages.each do |homepage| %>
+      <tr>
+        <td><%= homepage.name %></td>
+        <td><%= link_to 'Show', homepage %></td>
+        <td><%= link_to 'Edit', edit_homepage_path(homepage) %></td>
+        <td><%= link_to 'Destroy', homepage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

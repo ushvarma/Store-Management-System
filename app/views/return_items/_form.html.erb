@@ -1,0 +1,42 @@
+<%= form_with(model: return_item, local: true) do |form| %>
+  <% if return_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(return_item.errors.count, "error") %> prohibited this return_item from being saved:</h2>
+
+      <ul>
+        <% return_item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :returnuserId %>
+    <%= form.number_field :returnuserId %>
+  </div>
+
+  <div class="field">
+    <%= form.label :returnItemid %>
+    <%= form.number_field :returnItemid %>
+  </div>
+
+  <div class="field">
+    <%= form.label :returnTransactionId %>
+    <%= form.text_field :returnTransactionId %>
+  </div>
+
+  <div class="field">
+    <%= form.label :returnQuantity %>
+    <%= form.number_field :returnQuantity %>
+  </div>
+
+  <div class="field">
+    <%= form.label :refundAmount %>
+    <%= form.text_field :refundAmount %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,157 @@
+<!--<nav class=" shadow-top navbar navbar-expand-md navbar-dark bg-dark mb-3 rounded-bottom">
+  <div class ="container">
+    <div class="  navbar-nav">
+    <% if current_user %>
+      <%= link_to "Store", items_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Wishlists (#{@wc})", wishlists_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Cart (#{@cc})", carts_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Orders (#{@oc})", orders_url, method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Items Returned", return_items_url(:status_id => 1), method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Rejected Special Requests", special_items_url(:status_id => 2), method: "get", :class=>"nav-item nav-link"%>
+      <% if current_user.is_admin == true %>
+      <%= link_to "Return Requests", return_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Special Requests", special_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link"%>
+      <% end %>
+      <% end %>
+    </div>
+  </div>
+</nav>-->
+<div class ="row m-2">
+  <div class = "col-md-6">
+    <h1>Store</h1>
+  </div>
+  <div class = "col-md-3">
+    <form action="/items" method="GET">
+      <label for="filter">Filter Options</label>
+      <select name="filter" name="filter" onchange="this.form.submit()">
+      <option value="All" <%= "selected" if session[:filter] == "All" %>>All</option>
+      <option value="category" <%= "selected" if session[:filter] == "category" %>>Filter by category</option>
+        <option value="brand" <%= "selected" if session[:filter] == "brand" %>>Filter by brand</option>
+        <option value="remaining_quantity" <%= "selected" if session[:filter] == "remaining_quantity" %>>Filter by availabilty</option>
+      </select>
+      <% if session[:filter] == "category" %>
+        <select name="filter_option" onchange="this.form.submit()">
+          <option value="All">All</option>
+          <% @items.uniq{|a| a.category}.each do |item| %>
+            <option value="<%= item.category %>"><%= item.category %></option>
+          <% end %>
+        </select>
+        <%= link_to "Clear Filter Options", items_url %>            
+            
+      <% elsif session[:filter] == "brand" %>
+        <select name="filter_option" onchange="this.form.submit()">
+          <option value="All">All</option>
+          <% @items.each do |item| %>
+            <option value="<%= item.brand %>"><%= item.brand %></option>
+          <% end %>
+        </select>
+        <%= link_to "Clear Filter Options", items_url %>
+
+      <% elsif session[:filter] == "remaining_quantity" %>
+        <select name="filter_option" onchange="this.form.submit()">
+          <option value="All">All</option>
+
+          <option value="only_available">only available</option>         
+        </select>
+        <%= link_to "Clear Filter Options", items_url %>
+      <% elsif session[:filter] == "All" %>
+        <select name="filter_option" onchange="this.form.submit()">
+          <option value="All">All</option>
+
+          <option value="only_available">only available</option>         
+        </select>  
+        <%= params.inspect %>
+      <% end %>
+    </form>
+  </div>
+  <div class = "col-md-3">
+    <h6><%= sortable "price", 'sort based on price' %></h6>
+    <h6><%= sortable "special_item", 'sort based on popularity' %></h6>
+  </div>
+</div>
+<% if @visitor or @isUser %>
+  <div class = "row">
+    <% @items.each do |item| %>
+      <div class = "col-md-3 m-3 border rounded item_link" style = "text-align:center">
+        <div style="height: 300px;">
+          <div class="h-75 w-100" style="background-color: rgba(255,255,255,.3)">
+            <% if item.photo.present? %>
+              <div class = "d-inline-block" style = "padding:10px 10px">
+                <%= image_tag item.photo.url(:medium) ,:class => "img-fluid", :style => "width = 100%"%>
+              </div>
+            <% else %>
+              <div class = "d-inline-block" style = "padding:100px 20px">
+                No image is available for this product.
+              </div>
+            <% end %>
+          </div>
+          <div class="h-25 w-100">
+            <h4><%= link_to "#{item.name}", item, :class => "stretched-link home_links" %></h4>
+          </div>
+        </div>
+      <% if current_user %>  
+        <% if current_user.is_admin %>
+          <div class = "row mb-3">
+            <div class = "col-md-6" style="text-align:center">
+              <%= link_to 'Edit', edit_item_path(item), :class => "btn btn-warning" %>
+            </div>
+            <div class = "col-md-6">
+              <%= button_to 'X', item, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <table class = "table table-hover">
+    <tr>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Quantity</th>
+      <th>Price</th> 
+      <!--<th>Tax Slab</th>
+      <th>Special Item</th> 
+      <th>Age Restricted</th>-->       
+      <th colspan="4" style = "text-align:center"><%= link_to '+ New Item', new_item_path, :class => "btn btn-warning" %></th>
+    </tr>
+    <tr>
+    </tr>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= link_to "#{item.name}", item %></td>
+        <td><%= item.category %></td>
+        <td><%= item.quantity %></td>
+        <td><%= item.price %></td>
+        <!--<td><%= item.tax_slab %></td>
+        <td><%= item.special_item %></td>
+        <td><%= item.age_restricted %></td>-->
+        <!--
+        <% if item.photo.present? %>
+        <td><%= image_tag item.photo.url(:medium) %></td>
+        <% end %>-->
+        <td><%= link_to 'Show', item , :class => "btn btn-success"%></td>
+        <% if current_user %>
+          <!--<%# if item.quantity == 0 %>
+            <td colspan = "3" style = "text-align: center"><%#= link_to "Add to Subscription List", items_url(:is_subscribing=> true, :item_id => item.id), :class => "btn btn-warning" %></td>  
+          <%# else %>
+            <td><%#= button_to 'Add to Cart', {:controller => "carts", :action => "create", :name => current_user.email, :cartItem => item.id, :item_id => item.id, :itemquantity => 1}, method: "post", :class => "btn btn-success" %></td>
+            <td><%#= link_to 'Buy Now', quicktransaction_url(:itm_id => item.id),:class =>"btn btn-primary" %></td>
+            <td><%#= button_to 'Add to Wishlist', {:controller => "wishlists", :action => "create", :wname => current_user.email, :wishlistItem => item.id}, method: "post", :class => "btn btn-info" %></td>
+          <%# end %>-->
+          <% if current_user.is_admin == true %>
+            <td><%= link_to 'Edit', edit_item_path(item), :class => "btn btn-warning" %></td>
+            <td><%= button_to 'X', item, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<% if current_user %>
+  <% if current_user.is_admin == true %>
+    <%#= link_to 'View Users', users_path %>
+  <% end %>
+<% end %>
+

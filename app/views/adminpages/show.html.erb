@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @adminpage.name %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @adminpage.email %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @adminpage.password %>
+</p>
+
+<p>
+  <strong>Phone number:</strong>
+  <%= @adminpage.phone_number %>
+</p>
+
+<p>
+  <strong>Date of birth:</strong>
+  <%= @adminpage.date_of_birth %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @adminpage.address %>
+</p>
+
+<p>
+  <strong>Credit card number:</strong>
+  <%= @adminpage.credit_card_number %>
+</p>
+
+<p>
+  <strong>Name on card:</strong>
+  <%= @adminpage.name_on_card %>
+</p>
+
+<p>
+  <strong>Expiration date:</strong>
+  <%= @adminpage.expiration_date %>
+</p>
+
+<p>
+  <strong>CVV:</strong>
+  <%= @adminpage.CVV %>
+</p>
+
+<%= link_to 'Edit', edit_adminpage_path(@adminpage) %> |
+<%= link_to 'Back', adminpages_path %>

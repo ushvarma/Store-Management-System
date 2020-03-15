@@ -1,0 +1,55 @@
+<h2>Create User</h2>
+
+<%= form_for(@user) do |f| %>
+
+   <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+        <%= f.label :email %>
+        <%= f.text_field :email%>
+   </div>
+
+  <div class="field">
+    <%= f.label :phone_number %>
+    <%= f.number_field :phone_number %>
+  </div>
+
+  <div class="field">
+    <%= f.label :date_of_birth %>
+    <%= f.date_select :date_of_birth, :start_year => 1900%>
+  </div>
+
+  <div class="field">
+    <%= f.label :address %>
+    <%= f.text_area :address %>
+  </div>
+
+  <div class="field">
+    <%= f.label :credit_card_number %>
+    <%= f.number_field :credit_card_number,max: 9999999999999999, min:1000000000000000%>
+  </div>
+
+  <div class="field">
+    <%= f.label :name_on_card %>
+    <%= f.text_field :name_on_card %>
+  </div>
+
+  <div class="field">
+    <%= f.label :expiration_date %>
+    <%= f.date_select :expiration_date, :discard_day => true, :use_month_numbers => true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :CVV %>
+    <%= f.number_field :CVV, {min: 100, max: 999, size: "3"} %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update" %>
+  </div>
+<% end %>
+
+

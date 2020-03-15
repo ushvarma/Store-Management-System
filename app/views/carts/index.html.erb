@@ -1,0 +1,65 @@
+<!--<nav class=" shadow-top navbar navbar-expand-md navbar-dark bg-dark mb-3 rounded-bottom">
+  <div class ="container">
+    <div class="  navbar-nav">
+      <%= link_to "Store", items_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Wishlists (#{@wc})", wishlists_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Cart (#{@cc})", carts_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Orders (#{@oc})", orders_url, method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Items Returned", return_items_url(:status_id => 1), method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Rejected Special Requests", special_items_url(:status_id => 2), method: "get", :class=>"nav-item nav-link"%>
+      <% if current_user.is_admin == true %>
+      <%= link_to "Return Requests", return_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Special Requests", special_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link"%>
+      <% end %>
+    </div>
+  </div>
+</nav>-->
+<h1>Carts</h1>
+<% if @carts.present?%>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Unit</th>
+        <th>Cost</th>
+        <th>Quantity</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @carts.each do |cart| %>
+        <tr>
+          <td>
+            <%= Item.where(:id => cart.cartItem).last.name %><br/>
+            <% if @age < 18 %>
+              <% if Item.where(:id => cart.cartItem).last.age_restricted %>
+                <span class="label btn-danger rounded">18+ </span>
+              <% end %>
+            <% end %>
+          </td>
+          <td><%= Item.where(:id => cart.cartItem).last.price %></td> 
+          <td>
+              <%= cart.itemquantity %>
+          </td>
+            <%#= form_with(model: cart, local: true) do |form|%>
+              <%#= select("item_id", "Cart" Item.where(["id = ?", cart.cartItem]).collect{ |i| [ i.id i.quantity] }) %>
+            <%#end%>
+          <td><%= button_to 'X', cart, method: :delete, data: { confirm: 'Are you sure?' } , :class => "btn btn-outline-danger" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class = "row">
+    <div class = "col-md-2">
+      <%= link_to 'Back', items_path , :class => "btn btn-primary"%>
+    </div>
+    <div class = "col-md-7">
+      <%= link_to "Clear Cart", clearCart_url, method: "get", :class => "btn btn-outline-warning"%>
+    </div>
+    <div class = "col-md-3">
+      <%= button_to "Proceed for Payment", {:controller => "transaction", :action => "index"}, method: "get", :class => "btn btn-outline-primary"%>
+    </div>
+  </div>
+<% else%>
+  <h3>The list is empty.</h3></h3>
+<% end %>

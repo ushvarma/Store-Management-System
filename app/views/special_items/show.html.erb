@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Specialuserid:</strong>
+  <%= @special_item.specialUserId %>
+</p>
+
+<p>
+  <strong>Specialitemid:</strong>
+  <%= @special_item.specialItemid %>
+</p>
+
+<p>
+  <strong>Specialitemtransactionid:</strong>
+  <%= @special_item.specialItemTransactionId %>
+</p>
+
+<p>
+  <strong>Specialquantity:</strong>
+  <%= @special_item.specialQuantity %>
+</p>
+
+<p>
+  <strong>Refundamount:</strong>
+  <%= @special_item.refundAmount %>
+</p>
+
+<p>
+  <strong>Specialitemstatus:</strong>
+  <%= @special_item.specialItemStatus %>
+</p>
+
+<%= link_to 'Edit', edit_special_item_path(@special_item) %> |
+<%= link_to 'Back', special_items_path %>

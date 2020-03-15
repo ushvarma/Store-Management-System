@@ -1,0 +1,59 @@
+<!--<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3 rounded-bottom">
+  <div class ="container">
+    <div class="navbar-nav">
+      <%= link_to "Store", items_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Wishlists (#{@wc})", wishlists_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Cart (#{@cc})", carts_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Orders (#{@oc})", orders_url, method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Items Returned", return_items_url(:status_id => 1), method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Rejected Special Requests", special_items_url(:status_id => 2), method: "get", :class=>"nav-item nav-link"%>
+      <% if current_user.is_admin == true %>
+      <%= link_to "Return Requests", return_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Special Requests", special_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link"%>
+      <% end %>
+    </div>
+  </div>
+</nav>-->
+
+<!--<h1>Special Items</h1>-->
+<% if @special_items%>
+  <table class = "table table-hover">
+    <thead>
+      <tr>
+        <% if current_user.is_admin %>
+          <th>User</th>
+        <% end %>
+        <th>Item Id</th>
+        <th>TransactionID</th>
+        <th>Qty</th>
+        <th>Amount</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @special_items.each do |special_item| %>
+        <tr>
+          <% if current_user.is_admin %>
+            <td><%= User.where(:id => special_item.specialUserId).last.name %></td>
+          <% end %>
+          <td><%= Item.where(:id => special_item.specialItemid).last.name %></td>
+          <td><%= special_item.specialItemTransactionId %></td>
+          <td><%= special_item.specialQuantity %></td>
+          <td><%= special_item.refundAmount %></td>
+          <!--<td><%#= link_to 'Show', special_item %></td>
+          <td><%#= link_to 'Edit', edit_special_item_path(special_item) %></td>
+          <td><%#= link_to 'Destroy', special_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>-->
+          <% if special_item.select("specialItemStatus").last.specialItemStatus == 0 %>
+            <td><%= link_to 'Approve', specialrequestprocess_url(:is_approved => "yes", :item_id => special_item.specialItemid, :user_id => special_item.specialUserId, :tid => special_item.specialItemTransactionId), :method => "get", :class => "btn btn-outline-primary" %></td>
+            <td><%= link_to 'Reject', specialrequestprocess_url(:is_approved => "no", :item_id => special_item.specialItemid, :user_id => special_item.specialUserId, :tid => special_item.specialItemTransactionId), :method => "get", :class => "btn btn-outline-danger" %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+<% else%>
+  <h3>The list is empty.</h3>
+<% end %>
+
+<%= link_to 'Back', items_path , :class => "btn btn-primary"%>

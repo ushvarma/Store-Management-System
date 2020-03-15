@@ -1,0 +1,80 @@
+<!--<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3 rounded-bottom">
+  <div class ="container">
+    <div class="navbar-nav">
+      <%= link_to "Store", items_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Wishlists (#{@wc})", wishlists_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Cart (#{@cc})", carts_url, method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Orders (#{@oc})", orders_url, method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Items Returned", return_items_url(:status_id => 1), method: "get", :class=>"nav-item nav-link"%>
+      <%= link_to "Rejected Special Requests", special_items_url(:status_id => 2), method: "get", :class=>"nav-item nav-link"%>
+      <% if current_user.is_admin == true %>
+      <%= link_to "Return Requests", return_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link" %>
+      <%= link_to "Special Requests", special_items_url(:status_id => 0), method: "get", :class=>"nav-item nav-link"%>
+      <% end %>
+    </div>
+  </div>
+</nav>-->
+<% @userorder.each do |tid|%>
+  <div class = "container d-flex flex-column border mt-3 rounded bg-white text-black">
+    <div class = "row rounded-top bg-dark text-white p-2">
+      <div class = "col-md-6">
+        Transaction Id: <%= tid%>
+      </div>
+      <div class = "col-md-6">
+        Order Price: <%= Order.where(:transactionId => tid).last.orderPrice%>
+      </div>
+    </div>
+    <div class = "row">
+      <% Order.where(:transactionId => tid).select("orderItemId").each do |unitid| %>
+        <div class = "col-md-4 mt-3">
+          <strong>Item name:</strong> <%= Item.where(:id => unitid.orderItemId).last.name%>
+          <% @unit = Item.where(:id => unitid.orderItemId).last %>
+          <% if @unit.special_item and SpecialItem.where(:specialItemid => @unit.id).where(:specialuserId => current_user.id).where(:specialItemTransactionId => tid).last.present? %>
+            <br/><strong>Status : </strong><%= @special_status[SpecialItem.where(:specialItemid => @unit.id).where(:specialuserId => current_user.id).where(:specialItemTransactionId => tid).last.specialItemStatus] %>
+          <% end %>
+        </div>
+        <div class ="col-md-2 mt-3 mb-2">
+          <span>X </span> <%= Order.where(:orderItemId => unitid.orderItemId).where(:transactionId => tid).last.quantity%>
+        </div>
+        <div class ="col-md-3 mt-3 mb-2">
+          <strong>Unit Price:</strong> <%= Item.where(:id => unitid.orderItemId).last.price%>
+        </div>
+        <div class ="col-md-3 mt-2 mb-2 ">
+          <strong><%= button_to "Return", orders_url, params: { item_id: unitid.orderItemId }, method: "get", :class => "btn btn-outline-danger", data: { confirm: 'Are you sure?' } %></strong> 
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<!--
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Transactionid</th>
+      <th>Quantity</th>
+      <th>Unitprice</th>
+      <th>Orderprice</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= Item.where(["id = ?", order.orderItemId]).select("name").last.name %></td>
+        <td><%= order.transactionId %></td>
+        <td><%= order.quantity %></td>
+        <td><%= order.unitPrice %></td>
+        <td><%= order.orderPrice %></td>
+        <td><%#= link_to 'Show', order %></td>
+        <td><%#= link_to 'Edit', edit_order_path(order) %></td>
+        <td><%#= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+-->
+<br>
+
+<%= link_to 'Back', items_path , :class => "btn btn-primary"%>

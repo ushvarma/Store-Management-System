@@ -1,0 +1,2 @@
+module QuicktransactionHelper
+end

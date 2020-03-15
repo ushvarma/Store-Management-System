@@ -1,0 +1,71 @@
+<%= form_with(model: item, local: true) do |form| %>
+  <% if item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+        <% item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+
+
+  <div class="field">
+    <%= form.label :category %>
+    <%= form.text_field :category %>
+  </div>
+
+  <div class="field">
+  <%= form.label :brand %>
+  <%= form.text_field :brand %>
+  </div>
+
+  <div class="field">
+  <%= form.label :description %>
+  <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+  <%= form.label :quantity %>
+  <%= form.text_field :quantity %>
+  </div>
+
+  <div class="field">
+  <%= form.label :price %>
+  <%= form.text_field :price %>
+  </div>
+  
+  <div class="field">
+  <%= form.label :tax_slab %>
+  <%= form.text_field :tax_slab %>
+  </div>
+
+  <div class="field">
+  <%= form.label :special_item %>
+  <%= form.check_box  :special_item %>
+  </div>
+
+  <div class="field">
+  <%= form.label :age_restricted %>
+  <%= form.check_box :age_restricted %>
+  </div>
+
+  <p>
+  <%= form.label :photo %>
+  <%= form.file_field :photo %>
+  </p>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  
+
+<% end %>
