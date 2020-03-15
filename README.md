@@ -45,7 +45,7 @@ If you are an Admin :
 
 If you are a User :
 
-1) Log in with an email(admin@gmail.com) and password(pasword).
+1) Log in with your email or sign up.
 2) You can update your profile by clicing on Edit profile.
 3) You can delete your account on your edit profile page, with a link delete my account at the bottom of the page.
 4) Wishlist : On the Homepage, the Wishlist lists out all the items you added to you wishlist. 
